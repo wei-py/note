@@ -1,5 +1,4 @@
 from 查找使用中 import find_listing
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 import pandas as pd
 import asyncio
@@ -8,6 +7,7 @@ import os
 
 
 def split_arr(items, n):
+    n = len(item) // n
     return [items[i:i+n] for i in range(0, len(items), n)]
 
 
@@ -24,7 +24,7 @@ def filter_error(csv):
 
     # 过滤listingpage无使用的pubcode 可能是新镇
     if not os.path.exists('noUsing.json'):
-        index = split_arr(top.index, 50)
+        index = split_arr(top.index, 5)
         # nousingIndex = asyncio.run(find_listing(top.index))
         loop = asyncio.get_event_loop()
         task = [loop.create_task(find_listing(i)) for i in index]
