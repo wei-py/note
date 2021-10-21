@@ -37,7 +37,7 @@ def filter_error(csv):
     else:
         with open('noUsing.json', 'r') as f:
             nousingIndex = json.loads(f.read())['nousingInex']
-
+    # 求差集
     usingIndex = list(set(top.index).difference(set(nousingIndex)))
 
     # 标记错误并排序
