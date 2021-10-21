@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<crawling_plan type="forum" pubcode="forum_tgbbscn" url="" outputCharset="GBK" oldVersion="1" fromDate="20120420" onlyExtractFirstPost="true">
+  <listings>
+<url section="滨海直通车">http://www.tgbbs.cn/thread.php?fid-226.html</url>
+<url section="滨海直通车">http://www.tgbbs.cn/thread.php?fid-222.html</url>
+<url section="滨海直通车">http://www.tgbbs.cn/thread.php?fid-19.html</url>
+<url section="滨海直通车">http://www.tgbbs.cn/thread.php?fid-20.html</url>
+<url section="滨海直通车">http://www.tgbbs.cn/thread.php?fid-220.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-195.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-71.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-173.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-67.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-13.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-187.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-224.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-154.html</url>
+<url section="滨海生活">http://www.tgbbs.cn/thread.php?fid-156.html</url>
+<url section="滨海财富">http://www.tgbbs.cn/thread.php?fid-81.html</url>
+<url section="滨海财富">http://www.tgbbs.cn/thread.php?fid-24.html</url>
+<url section="兴趣圈子">http://www.tgbbs.cn/thread.php?fid-197.html</url>
+<url section="兴趣圈子">http://www.tgbbs.cn/thread.php?fid-111.html</url>
+<url section="兴趣圈子">http://www.tgbbs.cn/thread.php?fid-6.html</url>
+<url section="兴趣圈子">http://www.tgbbs.cn/thread.php?fid-184.html</url>
+<url section="兴趣圈子">http://www.tgbbs.cn/thread.php?fid-150.html</url>
+<url section="娱乐双响炮">http://www.tgbbs.cn/thread.php?fid-28.html</url>
+<url section="娱乐双响炮">http://www.tgbbs.cn/thread.php?fid-63.html</url>
+</listings>
+  <listing_extractor charset="Auto" html2xml="htmlCleaner">
+    <forum_url_id regular_expression="" match_strategy="false" />
+    <link_path strategy="IdClass"></link_path>
+    <title_path strategy="IdClass"></title_path>
+    <reply_number_path strategy="IdClass" num_strategy="Loose"></reply_number_path>
+    <click_number_path strategy="IdClass" num_strategy="Loose"></click_number_path>
+	<nextpage_path strategy="IdClass" maxpages="" page_strategy="NextPage"></nextpage_path>
+  </listing_extractor>
+  <forum_content_extractor charset="Auto" html2xml="htmlCleaner">
+    <content_path strategy="IdClass" filter_nodes="div[@class='modact']"></content_path>
+    <author_path strategy="IdClass"></author_path>
+    <date_path strategy="IdClass" date_strategy="Simple"></date_path>
+	<nextpage_path strategy="IdClass" maxpages="" page_strategy="NextPage"></nextpage_path>
+  </forum_content_extractor>
+</crawling_plan>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .contains {
+            height: 500px;
+            width: 500px;
+            background-color: bisque;
+        }
+    </style>
+    <script>
+        function bindEvent(elem, type, selector, fn) {
+            if (fn == null) {
+                fn = selector;
+                selector = null;
+            }
+            elem.addEventListener(type, e => {
+                let target;
+                if (selector) {
+                    target = e.target;
+                    if (target.matches(selector)) {
+                        fn.call(target, e);
+                    }
+                }
+                else {
+                    fn(e);
+                }
+            })
+        }
+
+        const contains = document.getElementsByClassName('contains');
+
+    </script>
+</head>
+
+<body>
+    <div class="contains">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <button id='btn'>加载更多。。。</button>
+    </div>
+</body>
+
+</html>
