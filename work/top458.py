@@ -25,7 +25,6 @@ def filter_error(csv):
     # 过滤listingpage无使用的pubcode 可能是新镇
     if not os.path.exists('noUsing.json'):
         index = split_arr(top.index, 50)
-        # nousingIndex = asyncio.run(task)
         # nousingIndex = asyncio.run(find_listing(top.index))
         loop = asyncio.get_event_loop()
         task = [loop.create_task(find_listing(i)) for i in index]
