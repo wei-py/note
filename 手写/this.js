@@ -5,7 +5,7 @@ console.log(global.a); // 37
 
 this.b = "MDN";
 console.log(global.b)  // "MDN"
-console.log(b)
+// console.log(b)
 
 
 function foo() {
