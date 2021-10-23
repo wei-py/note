@@ -1,0 +1,11 @@
+{
+  "name": "note",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wei-py/note.git",
+  "author": "wei-py <weipy6208@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "xmlhttprequest-ssl": "^2.0.0"
+  }
+}
