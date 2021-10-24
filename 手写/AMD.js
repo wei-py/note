@@ -1,3 +1,4 @@
+// 这里不用对象 而用IIFE是 保留moduleLists的引用
 let module = (function () {
     // 闭包的引用
     const moduleLists = {};
