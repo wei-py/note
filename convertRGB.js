@@ -12,10 +12,9 @@ function convertRGB(color) {
     return result.replace(/(.*),/, '$1)');
 }
 
-
-
 // var color = '#0000FF';
 var color = '#FAAF39';
 color = '#0000FF'
 var a = convertRGB(color);
 console.log(a);
+

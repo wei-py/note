@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.0-beta.7/vue.global.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="blog-posts-demo">
+        <blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    posts: [
+                        { id: 1, title: 'My journey with Vue' },
+                        { id: 2, title: 'Blogging with Vue' },
+                        { id: 3, title: 'Why Vue is so fun' }
+                    ]
+                }
+            }
+        }
+
+        const app = Vue.createApp(App)
+
+        app.component('blog-post', {
+            props: ['title'],
+            template: `<h4>{{ title }}</h4>`
+        })
+
+        app.mount('#blog-posts-demo')
+    </script>
+</body>
+
+</html>

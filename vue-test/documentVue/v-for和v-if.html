@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.0-beta.7/vue.global.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <template v-for="todo in todos">
+            <div v-if="todo.isComplete">{{todo.value}}</div>
+        </template>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    todos: [
+                        {isComplete: true, value: 100},
+                        {isComplete: true, value: 95},
+                        {isComplete: false, value: 90},
+                        {isComplete: true, value: 99},
+                    ]
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
+
+
+<!-- 
+    v-if 的优先级高于 v-for
+    不要同时使用 v-if 和 v-for
+ -->

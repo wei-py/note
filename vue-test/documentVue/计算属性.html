@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.0-beta.7/vue.global.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="computer">
+        <p>book title</p>
+        <span>{{publishedBookMessage}}</span>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    author: {
+                        name: 'John Doe',
+                        books: [
+                            'vue 2',
+                            'vue 3',
+                            'vue 4'
+                        ]
+                    }
+                }
+            },
+            computed: {
+                publishedBookMessage() {
+                    return this.author.books.length > 0 ? 'yes' : 'no';
+                },
+                fullName: {
+                    get() {
+                        return this.firstName + ' ' + this.lastName;
+                    },
+                    set(newValue) {
+                        const names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[names.length - 1];
+                    }
+                }
+            }
+        }).mount('#computer')
+    </script>
+</body>
+</html>
+
+<!-- 计算属性缓存 vs 方法
+    计算属性是基于它们的反应依赖关系缓存的，使用当 author.books 没有改变，多次访问 publishedBookMessage 计算属性会立即返回之前的计算结果
+-->

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.0-beta.7/vue.global.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="v-model-select" class="demo">
+        <select v-model="selected">
+            <option disabled value="">Please select one</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    selected: ''
+                }
+            }
+        }).mount('#v-model-select')
+    </script>
+</body>
+
+</html>
+
+
+<!-- 
+    对于使用输入法的语言，在组织语言时 v-model 不会更新
+    v-model 会忽略表单元素的 value checked selected 的 attribute
+    v.model .lazy .number .trim
+ -->

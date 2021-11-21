@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: content-box;
+        }
+
+        body {
+            padding: 30px;
+        }
+
+        .slide {
+            /* height: 700px; */
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide dt {
+            height: 30px;
+            background-color: #2f4988;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            cursor: pointer;
+        }
+
+        .slide dt:first-of-type {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .slide dd {
+            height: 100px;
+            background-color: #f9bb00;
+            overflow: hidden;
+        }
+
+        .slide dd div {
+            padding: 10px;
+        }
+
+        .slide dd:last-of-type {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="s1 slide">
+        <dt>wei1</dt>
+        <dd>
+            <div>github.com</div>
+        </dd>
+        <dt>wei2</dt>
+        <dd>
+            <div>github.com</div>
+        </dd>
+        <dt>wei3</dt>
+        <dd>
+            <div>github.com</div>
+        </dd>
+    </div>
+</body>
+
+<script>
+    class Animation {
+        constructor(el) {
+            this.el = el;
+            this.timeout = 5;
+            this.isShow = true;
+            this.defaultHeight = this.height;
+        }
+        hide(callback) {
+            this.isShow = false;
+            let id = setInterval(() => {
+                if (this.height <= 0) {
+                    clearInterval(id);
+                    callback && callback();
+                    return;
+                }
+                this.height = this.height - 1;
+            }, this.timeout);
+        }
+        show(callback) {
+            this.isShow = false;
+            let id = setInterval(() => {
+                if (this.height >= this.defaultHeight) {
+                    clearInterval(id);
+                    callback && callback();
+                    return;
+                }
+                this.height = this.height + 1;
+            }, this.timeout);
+        }
+        get height() {
+            return window.getComputedStyle(this.el).height.slice(0, -2) * 1;
+        }
+        set height(height) {
+            this.el.style.height = height + "px";
+        }
+    }
+    // class Slide {
+    //     constructor(el) {
+    //         this.el = document.querySelector(el);
+    //         this.links = this.el.querySelectorAll("dt");
+    //         this.panels = [...this.el.querySelectorAll("dd")].map(
+    //             item => new Panel(item)
+    //         );
+    //         this.bind();
+    //     }
+    //     bind() {
+    //         this.links.forEach((item, i) => {
+    //             item.addEventListener("click", () => {
+    //                 this.action(i);
+    //             });
+    //         });
+    //     }
+    //     action(i) {
+    //         Panel.hideAll(Panel.filter(this.panels, i), () => {
+    //             this.panels[i].show();
+    //         });
+    //     }
+    // }
+    // class Panel extends Animation {
+    //     static num = 0;
+    //     static hideAll(items, callback) {
+    //         if (Panel.num > 0) return;
+    //         items.forEach(item => {
+    //             Panel.num++;
+    //             item.hide(() => {
+    //                 Panel.num--;
+    //             });
+    //         });
+    //         callback && callback();
+    //     }
+    //     static filter(items, i) {
+    //         return items.filter((item, index) => index != i);
+    //     }
+    // }
+    // let hd = new Slide(".s1");
+    let el = document.querySelector('.s1');
+    let wei = new Animation(el);
+    wei.hide()
+</script>
+
+</html>

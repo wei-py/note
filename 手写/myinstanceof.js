@@ -1,16 +1,11 @@
-const Myinstanceof = function (instance, cl) {
-    // const baseType = ['string', 'number', 'boolean', 'undefined', 'symbol']
-    // if (baseType.includes(typeof (instace))) { return false }
-
-    cla = cl.prototype;
-    ins = Object.getPrototypeOf(instance);
-    while (ins) {
-        if (cla === ins) {
-            return true;
-        }
-        ins = Object.getPrototypeOf(ins);
+function myInstanceof(left, right) {
+    let proto = Object.getPrototypeOf(left);
+    let prototype = right.prototype;
+    while (true) {
+        if (!proto) return false;
+        if (proto === prototype) return true;
+        proto = Object.getPrototypeOf(proto);
     }
-    return false;
 }
 
 function Person(name, age) {
@@ -18,6 +13,6 @@ function Person(name, age) {
     this.age = age;
 }
 
-var p = new Person('wei', '22')
+var p = new Person('wei', '22');
 
-console.log(Myinstanceof(p, Person));
+console.log(myInstanceof(p, Person));

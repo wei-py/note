@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.0-beta.7/vue.global.min.js"></script>
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{fontSize: postFontSize + 'em'}">
+            <!-- <item v-for="post in posts" :key="post.id" :title="post.title" @enlarge-text="postFontSize += $event"></item> -->
+            <item v-for="post in posts" :key="post.id" :title="post.title" @enlarge-text="onEnlargeText"></item>
+        </div>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    posts: [
+                        { id: 1, title: 'linux' },
+                        { id: 2, title: 'mysql' },
+                        { id: 3, title: 'python' },
+                    ],
+                    postFontSize: 1
+                }
+            },
+            methods: {
+                onEnlargeText(enlargeAmount) {
+                    this.postFontSize += enlargeAmount
+                }
+            }
+        })
+        app.component('item', {
+            props: ['title'],
+            emits: ['enlarge-text'],
+            template: `
+            <div style="display: flex; justify-content: space-between; width: 150px;">
+                <h4>{{title}}</h4>
+                <button @click="$emit('enlarge-text', 0.1)">amplification</button>
+            </div>
+            `,
+            
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
+
+
+<!-- 
+    组件 @别名=操作
+    组件模板 @操作事件="$emit('别名')"
+    使用事件抛出一个值
+ -->

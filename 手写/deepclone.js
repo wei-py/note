@@ -3,8 +3,7 @@ const iscomplexType = (value) => (typeof value == 'function' || typeof value == 
 const deepclone = function (obj, hash = new WeakMap()) {
     if (hash.has(obj)) return hash.get(obj);
     let Type = [Map, Set, Date, RegExp, WeakMap, WeakSet];
-    if (Type.includes(obj)) return new obj.Contructor(obj);
-
+    if (Type.includes(obj)) return new obj.contructor(obj);
     let allDesc = Object.getOwnPropertyDescriptors(obj);
     let cloneObj = Object.create(Object.getPrototypeOf(obj), allDesc);
     let Symkeys = Object.getOwnPropertySymbols(obj);

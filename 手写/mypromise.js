@@ -94,11 +94,15 @@ class mypromise {
 
 const p = new mypromise((resolve, reject) => {
     setTimeout(() => {
-        resolve('wei')
+        resolve('wei')  // 修改 value
     }, 1000);
+    console.log('wei');
 }).then(value => {
-    console.log(value + ' then');
+    console.log(value + ' then'); // 
     return value
+    // setTimeout(() => {
+    //     return value
+    // }, 1000)
 }).then(value => {
     console.log(value + ' then2');
 })
