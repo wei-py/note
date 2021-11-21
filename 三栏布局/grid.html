@@ -7,24 +7,21 @@
     <title>Document</title>
     <style>
         #app {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 300px auto 300px;
+            grid-template-rows: 900px;
             background-color: #aaa;
-            height: 700px;
-            /* width: 100%; */
-            display: flex;
         }
         #left {
-            height: auto;
-            width: 300px;
             background-color: pink;
+            margin-right: 10px;
         }
         #right {
-            height: auto;
-            width: 300px;
             background-color: pink;
+            margin-left: 10px;
         }
         #middle {
-            height: auto;
-            flex: 1;
             background-color: skyblue;
         }
     </style>

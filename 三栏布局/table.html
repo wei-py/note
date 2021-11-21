@@ -7,25 +7,27 @@
     <title>Document</title>
     <style>
         #app {
+            display: table;
+            height: 900px;
+            width: 100%;
             background-color: #aaa;
-            height: 700px;
-            /* width: 100%; */
-            display: flex;
+        }
+        #app > div {
+            display: table-cell;
         }
         #left {
-            height: auto;
             width: 300px;
+            height: auto;
             background-color: pink;
+        }
+        #middle {
+            height: auto;
+            background-color: skyblue;
         }
         #right {
             height: auto;
             width: 300px;
             background-color: pink;
-        }
-        #middle {
-            height: auto;
-            flex: 1;
-            background-color: skyblue;
         }
     </style>
 </head>
