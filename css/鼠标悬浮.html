@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background-color: #557;
+      display: grid;
+      place-content: center;
+      padding: 1rem;
+    }
+
+    :root {
+      --li-scale: 1.25;
+      --li-scale-adj: 0.2;
+    }
+
+    li:hover {
+      /* 放大 */
+      scale: var(--li-scale);
+    }
+
+    /* 选择悬浮列表项前的列表项 */
+    li:has(+ li:hover),
+    /* 选择悬浮列表项后的列表项 */
+    li:hover+li {
+      --li-delay: 40ms;
+
+      scale: calc(var(--li-scale) - var(--li-scale-adj)); 
+      /* 1.25 - 0.2 = 1.05 */
+      opacity: 0.75;
+      filter: blur(.5px);
+    }
+
+    /* 当列表项被悬浮时，选择未悬浮或悬浮前后的列表项 */
+    li:not(:hover, :has(+ :hover), li:hover + *) {
+      --li-delay: 60ms;
+
+      scale: calc(1 - var(--li-scale-adj));
+      /* 1 - 0.2 = 0.8 */
+      opacity: 0.5;
+      filter: blur(2px);
+    }
+
+
+    ul {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(3, 100px);
+      grid-auto-rows: 100px;
+    }
+
+    li {
+      transition: all cubic-bezier(0.4, 0.8, 0.71, 1.03) 180ms;
+      transition-delay: var(--li-delay, 0);
+      cursor: pointer;
+    }
+
+    li img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: all cubic-bezier(0.4, 0.8, 0.71, 1.03) 180ms;
+      transition-delay: var(--li-delay, 0);
+    }
+
+    ul {
+      list-style: none outside none;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li><img src="https://picsum.photos/200/200/?random=11" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=1" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=2" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=3" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=4" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=5" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=6" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=7" alt=""></li>
+    <li><img src="https://picsum.photos/200/200/?random=8" alt=""></li>
+  </ul>
+</body>
+</html>
