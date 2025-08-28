@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - '@umijs/yorkie'
+  - core-js
+  - core-js-pure
+  - ejs
+  - esbuild
+  - fsevents
+  - puppeteer-core
+  - styled-components
