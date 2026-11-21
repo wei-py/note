@@ -1,0 +1,9 @@
+skills/
+!skills-lock.json
+
+# Keep private workspace data out of Git.
+/.env
+/.env.*
+/.lazynote/
+/todos.md
+/dones/

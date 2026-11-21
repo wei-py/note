@@ -1,0 +1,101 @@
+---
+title: "GitHub - metasequoiaime/msime-windows: 水杉输入法 Windows
+  产品：TSF、Server、GUI、设置页与安装器。内测：tg: https://t.me/msimegroup QQ Group: 829919142"
+lazynote_generated: true
+lazynote_id: 76780f07-0b46-4203-ac62-2da218c4e4ba
+tags:
+  - Windows 输入法
+  - TSF
+  - 开源项目
+date: 2026-11-11
+source: links.md
+url: https://github.com/metasequoiaime/MSIME-Windows
+resource_type: article
+description: "水杉输入法 Windows 产品：TSF、Server、GUI、设置页与安装器。内测：tg:
+  https://t.me/msimegroup QQ Group: 829919142 - metasequoiaime/msime-windows"
+site_name: GitHub
+author: null
+resolved_url: https://github.com/metasequoiaime/MSIME-Windows
+metadata_status: saved
+metadata_error: null
+collection_status: saved
+collection_error: null
+tag_status: tagged
+tag_error: null
+---
+
+<!-- lazynote:body -->
+# 水杉输入法
+
+[官网](https://msime.app/) · [用户文档](https://msime.app/docs/) · [隐私说明](https://github.com/metasequoiaime/msime-windows/blob/develop/PRIVACY.md) · [代码签名策略 / Code signing policy](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/code-signing-policy.md) · [English README](https://github.com/metasequoiaime/msime-windows/blob/develop/README.en.md)
+
+[CI](https://github.com/metasequoiaime/MSIME-Windows/actions/workflows/ci.yml) [CodeQL](https://github.com/metasequoiaime/MSIME-Windows/actions/workflows/codeql.yml) [Release](https://github.com/metasequoiaime/MSIME-Windows/releases) [Downloads](https://github.com/metasequoiaime/MSIME-Windows/releases) [License](https://github.com/metasequoiaime/msime-windows/blob/develop/LICENSE) [Stars](https://github.com/metasequoiaime/MSIME-Windows/stargazers)
+
+一款开源的自由 Windows 输入法，面向 Windows 10 / Windows 11，采用纯 TSF 方案。
+
+## 下载与安装
+
+-   **安装包**：[Releases](https://github.com/metasequoiaime/MSIME-Windows/releases)，或[官网下载页](https://msime.app/download/)
+-   **安装步骤与常见问题**：[docs/installation.md](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/installation.md)
+
+安装后用 `Win + 空格` 切换到水杉输入法。如果切换不过去、Server 反复退出或设置窗口一闪即关，多半是缺少 Visual C++ 2015–2022 Redistributable（**x64**），处理办法见安装文档的常见问题。
+
+其他平台：[macOS 与 iOS](https://github.com/metasequoiaime/MSIME-Apple) · [Linux](https://github.com/metasequoiaime/MSIME-Linux)
+
+## 参与贡献
+
+本项目现在及未来都会保持 100% 开源，欢迎提交 PR，也接受借助 AI 完成的 PR，唯一的请求是友善交流。不会写 TSF 或 C++ 也没关系。
+
+Issue 已经逐条核过并按可接手程度打了标签，可以直接筛：
+
+-   [good first issue](https://github.com/metasequoiaime/MSIME-Windows/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)——改动小，根因和修法已经写明
+-   [no-code](https://github.com/metasequoiaime/MSIME-Windows/issues?q=is%3Aissue+is%3Aopen+label%3Ano-code)——不需要写代码：图标资源、词库条目、文档、调研
+-   [help wanted](https://github.com/metasequoiaime/MSIME-Windows/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)——根因明确、改动中等
+-   [needs-design](https://github.com/metasequoiaime/MSIME-Windows/issues?q=is%3Aissue+is%3Aopen+label%3Aneeds-design)——方案未定，先在 Issue 里讨论再动手
+
+写代码、写文档、整理词库、测试 Bug、制作教程，都是非常有价值的开源贡献。可以纯手写，也可以借助 AI；但请认真检查和测试，并注意不要在 PR、Issue、截图或日志中泄露 API Key 等敏感信息。完整的贡献约定见[贡献指南](https://github.com/metasequoiaime/.github/blob/main/CONTRIBUTING.md)。
+
+**要动代码的话，本仓的环境要求、从源码构建、打包和提交前检查全部写在 [CONTRIBUTING.md](https://github.com/metasequoiaime/msime-windows/blob/develop/CONTRIBUTING.md) 里。**
+
+输入引擎、词库和其他平台的源码都在主仓库 [metasequoiaime/msime](https://github.com/metasequoiaime/msime)，Windows 版的改动如果涉及共享引擎，也请在那里提 issue。
+
+## 文档
+
+-   [功能说明](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/features.md)：功能简介、各功能的用法与软件截图
+-   [项目结构](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/project-structure.md)：目录职责与引擎来源
+
+## 代码签名策略
+
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+
+签名范围、团队角色（Committers / Reviewers / Approvers）、构建与发布流程以及当前状态见 [Code signing policy](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/code-signing-policy.md)，隐私说明见 [PRIVACY.md](https://github.com/metasequoiaime/msime-windows/blob/develop/PRIVACY.md)。
+
+## 开源协议
+
+GPL-3.0。
+
+## 参考
+
+### Windows 开源输入法参考
+
+以下是一些 Windows 的开源输入法的参考项目。
+
+-   [Microsoft TSF IME Demo](https://github.com/microsoft/Windows-classic-samples/tree/main/Samples/IME/cpp/SampleIME)
+-   [weasel](https://github.com/rime/weasel)
+-   [PIME](https://github.com/EasyIME/PIME)
+-   [WindInput](https://github.com/huanfeng/WindInput)
+
+### 一些其他输入法相关的资源
+
+-   微软双拼方案来源：[https://www.bilibili.com/opus/550351671882601523](https://www.bilibili.com/opus/550351671882601523)
+
+## Star History
+
+[Star History Chart](https://star-history.com/#metasequoiaime/MSIME-Windows&Date)
+
+## 赞赏支持
+
+如果水杉输入法对您有帮助，欢迎请我吃个烤红薯/烤玉米/烤栗子/烤白果。
+
+[苏小凡 Channel 的微信赞赏码](https://github.com/metasequoiaime/msime-windows/blob/develop/docs/images/sponsor-wechat.jpg)
+<!-- lazynote:end -->
