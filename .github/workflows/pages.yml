@@ -1,0 +1,176 @@
+name: Publish LazyNote site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  upload:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          path: publication
+      - uses: actions/checkout@v7
+        with:
+          repository: wei-py/lazynote
+          ref: 0f50eef6e0378611ef24a08b1f664a31ff4c5ef4
+          persist-credentials: false
+          path: renderer
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Build LazyNote frontend
+        working-directory: renderer
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+      - name: Assemble Pages artifact
+        working-directory: publication
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+          import os
+          import shutil
+          import stat
+
+          files = []
+
+          def require_directory(path):
+              if not stat.S_ISDIR(path.lstat().st_mode):
+                  raise SystemExit(f'Expected real directory: {str(path)!r}')
+
+          def require_file(path, include=True):
+              info = path.lstat()
+              if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+                  raise SystemExit(f'Expected regular, unlinked file: {str(path)!r}')
+              if include:
+                  files.append(path)
+
+          root = Path('.')
+          required = {'workspace.json', '.lazynote-site'}
+          bundle_asset = r'[A-Za-z0-9_-]+-[a-z0-9]+[.](?:js|css|woff2)'
+          raster_asset = r'[a-f0-9]{64}[.](?:png|jpg|gif|webp|avif)'
+          emitted_months = set()
+          for path in root.iterdir():
+              required.discard(path.name)
+              if path.name in {'.git', '.github'}:
+                  continue
+              if path.name in {'workspace.json', '.lazynote-site'}:
+                  require_file(path)
+              elif path.name == 'assets':
+                  require_directory(path)
+                  for child in path.iterdir():
+                      if not re.fullmatch(raster_asset, child.name):
+                          raise SystemExit(f'Unexpected generated path: {str(child)!r}')
+                      require_file(child)
+              elif path.name in {'blogs', 'links'}:
+                  require_directory(path)
+                  for year in path.iterdir():
+                      if not re.fullmatch(r'[0-9]{4}', year.name):
+                          raise SystemExit(f'Unexpected archive year: {str(year)!r}')
+                      require_directory(year)
+                      for month in year.iterdir():
+                          if not re.fullmatch(r'0[1-9]|1[0-2]', month.name):
+                              raise SystemExit(f'Unexpected archive month: {str(month)!r}')
+                          require_directory(month)
+                          for child in month.iterdir():
+                              if child.name == 'index.json':
+                                  continue
+                              if path.name != 'blogs' or child.suffix != '.md':
+                                  raise SystemExit(f'Unexpected archive file: {str(child)!r}')
+                              require_file(child, include=False)
+                          index = month / 'index.json'
+                          require_file(index)
+                          records = json.loads(index.read_text(encoding='utf-8'))
+                          keys = {'kind', 'id', 'title', 'tags'}
+                          kind = 'article' if path.name == 'blogs' else 'link'
+                          keys |= {'date', 'publishedHtml'} if kind == 'article' else {'url'}
+                          if not isinstance(records, list) or not records:
+                              raise SystemExit(f'Expected nonempty public records: {str(index)!r}')
+                          for record in records:
+                              if not isinstance(record, dict) or record.keys() != keys or record['kind'] != kind:
+                                  raise SystemExit(f'Unexpected public fields: {str(index)!r}')
+                              if (not isinstance(record['tags'], list)
+                                      or any(not isinstance(tag, str) for tag in record['tags'])
+                                      or any(not isinstance(record[key], str) for key in keys - {'tags'})):
+                                  raise SystemExit(f'Invalid public record: {str(index)!r}')
+                          emitted_months.add(index.relative_to(root).as_posix())
+              else:
+                  raise SystemExit(f'Unexpected generated path: {str(path)!r}')
+          if required:
+              raise SystemExit(f'Missing generated files: {sorted(required)}')
+
+          workspace = json.loads((root / 'workspace.json').read_text(encoding='utf-8'))
+          if not isinstance(workspace, dict) or workspace.keys() != {'months'}:
+              raise SystemExit('Expected workspace.json to contain only a months list')
+          months = workspace['months']
+          if (not isinstance(months, list) or any(not isinstance(month, str) for month in months)
+                  or len(months) != len(emitted_months) or set(months) != emitted_months):
+              raise SystemExit('workspace.json months must match the emitted month indexes exactly')
+
+          output = Path(os.environ['RUNNER_TEMP']) / 'lazynote-pages'
+          output.mkdir()
+          for source in files:
+              if source.name == '.lazynote-site':
+                  continue
+              target = output / source
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, target)
+
+          frontend = Path('../renderer/dist')
+          bundle = json.loads((frontend / 'publication-assets.json').read_text(encoding='utf-8'))
+          if not isinstance(bundle, list) or not bundle:
+              raise SystemExit('Missing LazyNote frontend assets')
+          (output / 'assets').mkdir(exist_ok=True)
+          for name in bundle:
+              if not isinstance(name, str) or not re.fullmatch('assets/' + bundle_asset, name):
+                  raise SystemExit(f'Unexpected frontend asset: {name!r}')
+              source = frontend / name
+              target = output / name
+              if source.suffix == '.css':
+                  css = re.sub(r'''url\((["']?)/assets/''', r'url(\1./', source.read_text(encoding='utf-8'))
+                  target.write_text(css, encoding='utf-8')
+              else:
+                  shutil.copyfile(source, target)
+
+          shell = (frontend / 'index.html').read_text(encoding='utf-8')
+          shell = re.sub(r'((?:href|src)=")/assets/', r'\1./assets/', shell)
+          shell = shell.replace('<head>', """<head>
+              <meta name="lazynote-public" content="1">
+              <meta name="referrer" content="no-referrer">
+              <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">""", 1)
+          (output / 'index.html').write_text(shell, encoding='utf-8')
+          (output / 'vendor').mkdir()
+          for name in ('vendor/CARBON-LICENSE', 'LXGW-WenKai-GB-LICENSE.txt'):
+              shutil.copyfile(frontend / name, output / name)
+          PY
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ runner.temp }}/lazynote-pages
+          include-hidden-files: false
+
+  deploy:
+    needs: upload
+    runs-on: ubuntu-latest
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment
